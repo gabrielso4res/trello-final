@@ -13,15 +13,15 @@ class App extends Component {
     super();
 
     this.state = {
-      cards: []
+      lists: []
     }
   }
 
   componentDidMount() {
-    fetch('/cards')
+    fetch('/trellolist')
         .then(r => r.json())
-        .then(json => this.setState({cards: json}))
-        .catch(error => console.error('Error retrieving cards: ' + error));
+        .then(json => this.setState({lists: json}))
+        .catch(error => console.error('Error retrieving lists: ' + error));
   }
 
   onDragEnd = (result) => {
@@ -44,7 +44,7 @@ class App extends Component {
   };
 
   render() {
-    const { lists } = this.props;
+    const { lists } = this.state;
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
         <div className="App">
