@@ -1,0 +1,8 @@
+import example.TrelloCard
+
+model {
+	Iterable<TrelloCard> trelloCardList
+}
+
+json tmpl.trelloCard(trelloCardList ?: [])
+

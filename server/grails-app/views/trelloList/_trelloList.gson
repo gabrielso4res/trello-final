@@ -1,0 +1,7 @@
+import example.TrelloList
+
+model {
+	TrelloList trelloList
+}
+
+json g.render(trelloList, [resolveTemplate: false])
