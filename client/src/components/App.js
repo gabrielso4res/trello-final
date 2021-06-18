@@ -6,9 +6,22 @@ import TrelloActionButton from "./TrelloActionButton";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { sort } from "../actions";
 
+import 'whatwg-fetch';
+
 class App extends Component {
   constructor() {
     super();
+
+    this.state = {
+      cards: []
+    }
+  }
+
+  componentDidMount() {
+    fetch('/cards')
+        .then(r => r.json())
+        .then(json => this.setState({cards: json}))
+        .catch(error => console.error('Error retrieving cards: ' + error));
   }
 
   onDragEnd = (result) => {
