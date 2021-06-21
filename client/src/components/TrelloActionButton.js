@@ -15,7 +15,7 @@ export class TrelloActionButton extends Component {
   }
 
   submitNewCard = (card) => {
-    fetch('/http://localhost:8080/trellocard', {
+    fetch('/http://localhost:8080/trellolist', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(card)
@@ -69,7 +69,6 @@ export class TrelloActionButton extends Component {
     if (text) {
       dispatch(addCard(listID, text));
       this.setState({ text: "" });
-      this.submitNewCard(addCard(listID, text));
     }
   };
 
@@ -125,8 +124,9 @@ export class TrelloActionButton extends Component {
           />
         </Card>
         <div className="formButtonGroup">
-          <Button
+          <Button type="submit"
             onMouseDown={list ? this.handleAddList : this.handleAddCard}
+            onSubmit={list ? : this.submitNewCard}
             variant="contained"
           >
             {buttonTitle}
