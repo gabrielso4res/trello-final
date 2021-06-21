@@ -18,10 +18,11 @@ class TrelloListController {
     static responseFormats = ['json', 'xml']
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def index(Integer max) {
+    /*def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond trelloListService.list(params), model:[trelloListCount: trelloListService.count()]
-    }
+    }*/
+    def index() { }
 
     def show(Long id) {
         respond trelloListService.get(id)

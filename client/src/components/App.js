@@ -18,7 +18,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch('/trellolist')
+    fetch('http://localhost:8080/trellolist')
         .then(r => r.json())
         .then(json => this.setState({lists: json}))
         .catch(error => console.error('Error retrieving lists: ' + error));

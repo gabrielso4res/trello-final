@@ -8,7 +8,4 @@ json {
 	id trelloCard.id
 
 	text trelloCard.text
-
-	trelloList title: trelloCard.trelloList.title,
-				id: trelloCard.trelloList.id
 }

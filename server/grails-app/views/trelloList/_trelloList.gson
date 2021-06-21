@@ -1,7 +1,14 @@
 import example.TrelloList
+import _trelloCard
 
 model {
 	TrelloList trelloList
 }
 
-json g.render(trelloList, [resolveTemplate: false])
+json {
+	title trelloList.title
+
+	id trelloList.id
+
+	card g.render(template: "trelloCard", collection: trelloList.card, var: "trelloCard")
+}
