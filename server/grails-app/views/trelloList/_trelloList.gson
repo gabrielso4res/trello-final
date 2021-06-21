@@ -1,5 +1,4 @@
 import example.TrelloList
-import _trelloCard
 
 model {
 	TrelloList trelloList
@@ -10,5 +9,12 @@ json {
 
 	id trelloList.id
 
-	card g.render(template: "trelloCard", collection: trelloList.card, var: "trelloCard")
+	/*def a = trelloList.get(1);
+	for(trelloCard in a.card){
+		card id: trelloCard.id,
+			text: trelloCard.text
+	}*/
+
+	//card tmpl.'/trelloCard/trelloCard'(trelloList.card)
+	cards g.render(template: "/trelloCard/trelloCard", collection: trelloList.card, var: "trelloCard")
 }

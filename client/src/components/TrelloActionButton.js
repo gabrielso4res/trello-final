@@ -9,6 +9,25 @@ import { addList, addCard } from "../actions";
 import { lighten } from "polished";
 
 export class TrelloActionButton extends Component {
+  constructor(props){
+    super(props);
+    this.state = {}
+  }
+
+  submitNewCard = (card) => {
+    fetch('/http://localhost:8080/trellocard', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(card)
+    }).then(r => r.json())
+        .then(json => {
+          let cards = this.state.lists.cards;
+          cards.push({id: json.id, text: json.text});
+          this.setState({cards});
+        })
+        .catch(ex => console.error('Unable to save card', ex));
+  };
+  
   state = {
     formOpen: false,
     text: "",
@@ -50,6 +69,7 @@ export class TrelloActionButton extends Component {
     if (text) {
       dispatch(addCard(listID, text));
       this.setState({ text: "" });
+      this.submitNewCard(addCard(listID, text));
     }
   };
 

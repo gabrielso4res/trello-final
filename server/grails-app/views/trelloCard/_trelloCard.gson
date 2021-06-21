@@ -6,6 +6,5 @@ model {
 
 json {
 	id trelloCard.id
-
 	text trelloCard.text
 }
