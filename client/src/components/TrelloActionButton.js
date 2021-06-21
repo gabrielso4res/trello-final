@@ -13,20 +13,6 @@ export class TrelloActionButton extends Component {
     super(props);
     this.state = {}
   }
-
-  submitNewCard = (card) => {
-    fetch('/http://localhost:8080/trellolist', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(card)
-    }).then(r => r.json())
-        .then(json => {
-          let cards = this.state.lists.cards;
-          cards.push({id: json.id, text: json.text});
-          this.setState({cards});
-        })
-        .catch(ex => console.error('Unable to save card', ex));
-  };
   
   state = {
     formOpen: false,
@@ -68,7 +54,7 @@ export class TrelloActionButton extends Component {
 
     if (text) {
       dispatch(addCard(listID, text));
-      //this.props.onSubmit(listID, text);
+      //this.props.onSubmit(text);
       this.setState({ text: "" });
     }
   };
@@ -125,7 +111,7 @@ export class TrelloActionButton extends Component {
           />
         </Card>
         <div className="formButtonGroup">
-          <Button type="submit"
+          <Button type={list ? null : "submit"}
             onMouseDown={list ? this.handleAddList : this.handleAddCard}
             onSubmit={list ? null : this.submitNewCard}
             variant="contained"
