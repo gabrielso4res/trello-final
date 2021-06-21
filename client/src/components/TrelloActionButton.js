@@ -68,6 +68,7 @@ export class TrelloActionButton extends Component {
 
     if (text) {
       dispatch(addCard(listID, text));
+      //this.props.onSubmit(listID, text);
       this.setState({ text: "" });
     }
   };
@@ -126,7 +127,7 @@ export class TrelloActionButton extends Component {
         <div className="formButtonGroup">
           <Button type="submit"
             onMouseDown={list ? this.handleAddList : this.handleAddCard}
-            onSubmit={list ? : this.submitNewCard}
+            onSubmit={list ? null : this.submitNewCard}
             variant="contained"
           >
             {buttonTitle}
