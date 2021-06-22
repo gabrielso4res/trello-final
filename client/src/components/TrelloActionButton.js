@@ -54,7 +54,7 @@ export class TrelloActionButton extends Component {
 
     if (text) {
       dispatch(addCard(listID, text));
-      //this.props.onSubmit(text);
+      this.props.onSubmit(addCard(listID, text));
       this.setState({ text: "" });
     }
   };
