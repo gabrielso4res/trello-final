@@ -31,7 +31,7 @@ class App extends Component {
       body: JSON.stringify(card)
     }).then(r => r.json())
         .then(json => {
-          let cards = this.state.lists.cards;
+          let cards = this.state.cards;
           cards.push({id: json.id, text: json.text});
           this.setState({cards});
         })
@@ -80,7 +80,7 @@ class App extends Component {
                   />
                 ))}
                 {provider.placeholder}
-                <TrelloActionButton list submitNewCard />
+                <TrelloActionButton list addToApi={this.submitNewCard} />
               </div>
             )}
           </Droppable>

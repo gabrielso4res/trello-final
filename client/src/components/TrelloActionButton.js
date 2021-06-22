@@ -13,7 +13,7 @@ export class TrelloActionButton extends Component {
     super(props);
     this.state = {}
   }
-  
+
   state = {
     formOpen: false,
     text: "",
@@ -49,11 +49,11 @@ export class TrelloActionButton extends Component {
   };
 
   handleAddCard = () => {
-    const { dispatch, listID } = this.props;
+    const { dispatch, listID, addToApi } = this.props;
     const { text } = this.state;
 
     if (text) {
-      this.props.submitNewCard = {id: "5", text};
+      addToApi({id: "5", text});
       dispatch(addCard(listID, text));
       this.setState({ text: "" });
     }
@@ -111,7 +111,9 @@ export class TrelloActionButton extends Component {
           />
         </Card>
         <div className="formButtonGroup">
-          <Button type={list ? null : "submit"}
+          <Button
+            addToApi={this.submitNewCard}
+            type={list ? null : "submit"}
             onMouseDown={list ? this.handleAddList : this.handleAddCard}
             onSubmit={list ? null : this.handleAddCard}
             variant="contained"
