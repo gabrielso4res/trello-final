@@ -23,9 +23,22 @@ const ListTitle = styled.h4`
   }
 `;
 
-function TrelloList({ title, cards, listID, index, dispatch, addToApi = () => {}, submitNewCard }) {
+function TrelloList({ title, cards, listID, index, dispatch }) {
   const [isEditing, setIsEditing] = useState(false);
   const [listTitle, setListTitle] = useState(title);
+
+  const submitNewCard = (card) => {
+    fetch('http://localhost:8080/trellolist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(card)})
+        .then(r => r.json())
+        .then(json => {
+          cards.push({id: json.id, text: json.text});
+          //this.setState({cards});
+        })
+        .catch(ex => console.error('Unable to save card', ex));
+  };
 
   const StyledInput = styled.input`
     width: 100%;
