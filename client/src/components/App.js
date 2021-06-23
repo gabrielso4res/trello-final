@@ -25,7 +25,7 @@ class App extends Component {
   }
 
   submitNewCard = (card) => {
-    fetch('/http://localhost:8080/trellolist', {
+    fetch('http://localhost:8080/trellolist', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(card)

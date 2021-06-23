@@ -9,9 +9,12 @@ import { addList, addCard } from "../actions";
 import { lighten } from "polished";
 
 export class TrelloActionButton extends Component {
-  constructor(props){
-    super(props);
-    this.state = {}
+  constructor() {
+    super();
+
+    this.state = {
+      lists: []
+    }
   }
 
   state = {
@@ -112,7 +115,6 @@ export class TrelloActionButton extends Component {
         </Card>
         <div className="formButtonGroup">
           <Button
-            addToApi={this.submitNewCard}
             type={list ? null : "submit"}
             onMouseDown={list ? this.handleAddList : this.handleAddCard}
             onSubmit={list ? null : this.handleAddCard}

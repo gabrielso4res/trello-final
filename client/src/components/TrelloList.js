@@ -23,7 +23,7 @@ const ListTitle = styled.h4`
   }
 `;
 
-function TrelloList({ title, cards, listID, index, dispatch, addToApi }) {
+function TrelloList({ title, cards, listID, index, dispatch, addToApi, submitNewCard }) {
   const [isEditing, setIsEditing] = useState(false);
   const [listTitle, setListTitle] = useState(title);
 
@@ -60,20 +60,6 @@ function TrelloList({ title, cards, listID, index, dispatch, addToApi }) {
     dispatch(editTitle(listID, listTitle));
   };
 
-  const submitNewCard = (card) => {
-    fetch('/http://localhost:8080/trellolist', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(card)
-    }).then(r => r.json())
-        .then(json => {
-          let cards = this.state.cards;
-          cards.push({id: json.id, text: json.text});
-          this.setState({cards});
-        })
-        .catch(ex => console.error('Unable to save card', ex));
-  };
-
   return (
     <Draggable draggableId={String(listID)} index={index}>
       {(provider) => (
@@ -104,7 +90,7 @@ function TrelloList({ title, cards, listID, index, dispatch, addToApi }) {
                     listID={listID}
                   />
                 ))}
-                <TrelloActionButton listID={listID} addToApi={() => submitNewCard} />
+                <TrelloActionButton listID={listID} addToApi={submitNewCard} />
                 {provider.placeholder}
               </div>
             )}
