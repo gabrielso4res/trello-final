@@ -1,42 +1,9 @@
 import { CONSTANTS } from "../actions";
 let listID = 2;
-let cardID = 5;
+let cardID = 2;
 
 const initialState = {
-    lists: [
-      {
-        title: "Para fazer",
-        id: `list-${0}`,
-        cards: [
-          {
-            id: `card-${0}`,
-            text: "Trello Clone",
-          },
-          {
-            id: `card-${1}`,
-            text: "Estilo",
-          },
-        ],
-      },
-      {
-        title: "Fazendo",
-        id: `list-${1}`,
-        cards: [
-          {
-            id: `card-${2}`,
-            text: "Refatorando",
-          },
-          {
-            id: `card-${3}`,
-            text: "Commit",
-          },
-          {
-            id: `card-${4}`,
-            text: "Teste",
-          },
-        ],
-      },
-    ],
+    lists: [],
 };
 
 const listsReducer = (state = initialState, action) => {
