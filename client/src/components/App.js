@@ -80,7 +80,7 @@ class App extends Component {
                   />
                 ))}
                 {provider.placeholder}
-                <TrelloActionButton list submitNewCard={this.submitNewCard} />
+                <TrelloActionButton list addToApi={this.submitNewCard} />
               </div>
             )}
           </Droppable>
