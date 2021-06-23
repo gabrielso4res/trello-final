@@ -15,7 +15,7 @@ const CardContainer = styled.div`
   word-wrap: break-word;
 `;
 
-const TrelloCard = React.memo(({ text, id, listID, index, dispatch, addToApi }) => {
+const TrelloCard = React.memo(({ text, id, listID, index, dispatch }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [cardText, setText] = useState(text);
 

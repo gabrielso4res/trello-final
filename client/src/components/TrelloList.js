@@ -23,7 +23,7 @@ const ListTitle = styled.h4`
   }
 `;
 
-function TrelloList({ title, cards, listID, index, dispatch, addToApi, submitNewCard }) {
+function TrelloList({ title, cards, listID, index, dispatch, submitNewCard = () => {} }) {
   const [isEditing, setIsEditing] = useState(false);
   const [listTitle, setListTitle] = useState(title);
 
@@ -90,7 +90,7 @@ function TrelloList({ title, cards, listID, index, dispatch, addToApi, submitNew
                     listID={listID}
                   />
                 ))}
-                <TrelloActionButton listID={listID} addToApi={submitNewCard} />
+                <TrelloActionButton listID={listID} submitNewCard={submitNewCard} />
                 {provider.placeholder}
               </div>
             )}
