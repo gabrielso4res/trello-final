@@ -28,14 +28,14 @@ function TrelloList({ title, cards, listID, index, dispatch }) {
   const [listTitle, setListTitle] = useState(title);
 
   const submitNewCard = (card) => {
-    console.log(card);
     fetch('http://localhost:8080/trellocard/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(card)})
         .then(r => r.json())
         .then(json => {
-          cards.push({id: json.idcard, text: json.text, lista: json.lista});
+          cards.push({id: cards.length, text: json.text, lista: json.lista});
+          console.log(cards.length)
           //this.setState({cards});
         })
         .catch(ex => console.error('Unable to save card', ex));

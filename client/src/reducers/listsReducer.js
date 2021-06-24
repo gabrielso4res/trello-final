@@ -1,6 +1,6 @@
 import { CONSTANTS } from "../actions";
 let listID = 2;
-let cardID = 2;
+let cardID =1;
 
 const initialState = {
     lists: [],
