@@ -24,6 +24,21 @@ class App extends Component {
         .catch(error => console.error('Error retrieving lists: ' + error));
   }
 
+  submitNewList = (list) => {
+    console.log(list);
+    fetch('http://localhost:8080/trellolist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(list)})
+        .then(r => r.json())
+        .then(json => {
+          let trello = this.state.lists;
+          trello.push({id: 2, title: list.title, card: json.card});
+          //this.setState({cards});
+        })
+        .catch(ex => console.error('Unable to save card', ex));
+  };
+
   onDragEnd = (result) => {
     const { destination, source, draggableId, type } = result;
 
@@ -66,7 +81,7 @@ class App extends Component {
                   />
                 ))}
                 {provider.placeholder}
-                <TrelloActionButton list /*addToApi={this.submitNewCard}*/ />
+                <TrelloActionButton list addListToApi={this.submitNewList} />
               </div>
             )}
           </Droppable>

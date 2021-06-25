@@ -40,20 +40,6 @@ function TrelloList({ title, cards, listID, index, dispatch }) {
         .catch(ex => console.error('Unable to save card', ex));
   };
 
-  const submitNewList = (list) => {
-    fetch('http://localhost:8080/trellolist/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(list)})
-        .then(r => r.json())
-        .then(json => {
-          let lists = this.state;
-          lists.push({title: list.title, cards: []});
-          //this.setState({cards});
-        })
-        .catch(ex => console.error('Unable to save card', ex));
-  };
-
   const StyledInput = styled.input`
     width: 100%;
     border: none;
@@ -117,7 +103,7 @@ function TrelloList({ title, cards, listID, index, dispatch }) {
                     listID={listID}
                   />
                 ))}
-                <TrelloActionButton listID={listID} addCardToApi={submitNewCard} addListToApi={submitNewList}/>
+                <TrelloActionButton listID={listID} addCardToApi={submitNewCard} />
                 {provider.placeholder}
               </div>
             )}
