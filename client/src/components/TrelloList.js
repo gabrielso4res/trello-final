@@ -40,6 +40,14 @@ function TrelloList({ title, cards, listID, index, dispatch }) {
         .catch(ex => console.error('Unable to save card', ex));
   };
 
+  const submitEditList = (list) => {
+    fetch('http://localhost:8080/trellolist/' + list.id, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(list)})
+        .catch(ex => console.error('Unable to save card', ex));
+  };
+
   const StyledInput = styled.input`
     width: 100%;
     border: none;
@@ -70,6 +78,8 @@ function TrelloList({ title, cards, listID, index, dispatch }) {
 
   const handleFinishEditing = (e) => {
     setIsEditing(false);
+
+    submitEditList({id: listID, title: listTitle});
     dispatch(editTitle(listID, listTitle));
   };
 

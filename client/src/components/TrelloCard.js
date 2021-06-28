@@ -19,6 +19,13 @@ const TrelloCard = React.memo(({ text, id, listID, index, dispatch }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [cardText, setText] = useState(text);
 
+  const submitEditCard = (card) => {
+    fetch('http://localhost:8080/trellocard/'+card.id, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(card)})
+        .catch(ex => console.error('Unable to save card', ex));
+  };
 
   const closeForm = e => {
     setIsEditing(false);
@@ -31,6 +38,7 @@ const TrelloCard = React.memo(({ text, id, listID, index, dispatch }) => {
   const saveCard = e => {
     e.preventDefault();
 
+    submitEditCard({id: id, text: cardText, lista: listID});
     dispatch(editCard(id, listID, cardText));
     setIsEditing(false);
   };

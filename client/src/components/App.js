@@ -33,10 +33,10 @@ class App extends Component {
         .then(r => r.json())
         .then(json => {
           let trello = this.state.lists;
-          trello.push({id: 2, title: list.title, card: json.card});
+          trello.push({id: 2, title: json.text, card: json.card});
           //this.setState({cards});
         })
-        .catch(ex => console.error('Unable to save card', ex));
+        .catch(ex => console.error('Unable to save list', ex));
   };
 
   onDragEnd = (result) => {
