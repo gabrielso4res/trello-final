@@ -105,8 +105,6 @@ const listsReducer = (state = initialState, action) => {
       })
     };}
 
-    case CONSTANTS.CHANGE_CARD_LIST:
-
     default:
       return state;
   }

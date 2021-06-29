@@ -35,8 +35,22 @@ class App extends Component {
   onDragEnd = (result) => {
     const { destination, source, draggableId, type } = result;
 
+    const submitEditCardList = ({cardID, listEnd}) => {
+      fetch('http://localhost:8080/trellocard/' + cardID, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({lista: listEnd})})
+          .catch(ex => console.error('Unable to save card', ex));
+    }
+
     if (!destination) {
       return;
+    }
+
+    if(source.droppableId !== destination.droppableId){
+      let final = destination.droppableId;
+      console.log(final)
+      submitEditCardList({draggableId, final});
     }
 
     this.props.dispatch(
