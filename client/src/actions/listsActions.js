@@ -17,6 +17,17 @@ export const editTitle = (listID, newTitle) => {
   };
 };
 
+export const changeCardList = (id, startID, endID) => {
+  return {
+    type: CONSTANTS.CHANGE_CARD_LIST,
+    payload: {
+      id,
+      startID,
+      endID,
+    },
+  };
+};
+
 export const sort = (
   droppableIdStart,
   droppableIdEnd,

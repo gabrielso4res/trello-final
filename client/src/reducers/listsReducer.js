@@ -1,4 +1,6 @@
 import { CONSTANTS } from "../actions";
+import 'whatwg-fetch';
+
 let listID = 2;
 let cardID = 2;
 
@@ -102,6 +104,8 @@ const listsReducer = (state = initialState, action) => {
         return list;
       })
     };}
+
+    case CONSTANTS.CHANGE_CARD_LIST:
 
     default:
       return state;

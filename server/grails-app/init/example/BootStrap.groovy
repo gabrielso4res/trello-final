@@ -7,7 +7,7 @@ class BootStrap {
 
     def init = { servletContext ->
         log.info "Loading database...";
-        def list1 = new TrelloList(id: "0", title: "lista1").save();
+        def list1 = new TrelloList("id": "0", title: "lista1").save();
         //def list2 = new TrelloList(id: "1", title: "lista2").save();
 
         //list1.addToCard(new TrelloCard(id: "0", text: "Card1", lista: list1).save())

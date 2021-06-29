@@ -32,11 +32,6 @@ function TrelloList({ title, cards, listID, index, dispatch }) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(card)})
-        .then(r => r.json())
-        .then(json => {
-          cards.push({id: cards.length, text: json.text, lista: json.lista});
-          //this.setState({cards});
-        })
         .catch(ex => console.error('Unable to save card', ex));
   };
 
