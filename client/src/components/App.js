@@ -4,7 +4,7 @@ import TrelloList from "./TrelloList";
 import { connect } from "react-redux";
 import TrelloActionButton from "./TrelloActionButton";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
-import { sort, changeCardList } from "../actions";
+import { sort, loadLists } from "../actions";
 
 import 'whatwg-fetch';
 
@@ -17,10 +17,17 @@ class App extends Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState){
+    if(prevState.lists !== this.state.lists){
+      this.setState({lists: this.state.lists})
+    }
+  }
+
   componentDidMount() {
     fetch('http://localhost:8080/trellolist')
         .then(r => r.json())
         .then(json => this.setState({lists: json}))
+        .then(json => this.props.loadLists({lists: json}))
         .catch(error => console.error('Error retrieving lists: ' + error));
   }
 
@@ -35,11 +42,11 @@ class App extends Component {
   onDragEnd = (result) => {
     const { destination, source, draggableId, type } = result;
 
-    const submitEditCardList = ({cardID, listEnd}) => {
-      fetch('http://localhost:8080/trellocard/' + cardID, {
+    const submitEditCardList = (editedcard) => {
+      fetch('http://localhost:8080/trellocard/'+editedcard.draggableId, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({lista: listEnd})})
+        body: JSON.stringify({id: editedcard.draggableId,lista: editedcard.final})})
           .catch(ex => console.error('Unable to save card', ex));
     }
 
@@ -50,6 +57,7 @@ class App extends Component {
     if(source.droppableId !== destination.droppableId){
       let final = destination.droppableId;
       console.log(final)
+      console.log(draggableId)
       submitEditCardList({draggableId, final});
     }
 
@@ -98,9 +106,16 @@ class App extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return{
+    loadLists: (lists) => dispatch(loadLists({lists})),
+    dispatch
+  }
+}
+
 const mapStateToProps = (state) => {
   return {
     lists: state.lists.lists,
   };
 };
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

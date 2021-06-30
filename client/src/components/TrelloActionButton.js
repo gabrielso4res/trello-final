@@ -53,11 +53,11 @@ export class TrelloActionButton extends Component {
   };
 
   handleAddCard = () => {
-    const { dispatch, listID, addCardToApi } = this.props;
+    const { dispatch, listID, addCardToApi, index } = this.props;
     const { text } = this.state;
 
     if (text) {
-      addCardToApi({text, lista: listID});
+      addCardToApi({text, lista: listID, index: index});
       dispatch(addCard(listID, text));
       this.setState({ text: "" });
     }

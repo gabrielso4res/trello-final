@@ -40,7 +40,7 @@ function TrelloList({ title, cards, listID, index, dispatch }) {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(list)})
-        .catch(ex => console.error('Unable to save card', ex));
+        .catch(ex => console.error('Unable to save list', ex));
   };
 
   const StyledInput = styled.input`

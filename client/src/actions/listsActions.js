@@ -1,5 +1,12 @@
 import { CONSTANTS } from "../actions";
 
+export const loadLists = (lists) => {
+  return{
+    type: CONSTANTS.LOAD_LISTS,
+    payload: lists,
+  };
+}
+
 export const addList = (title) => {
   return {
     type: CONSTANTS.ADD_LIST,

@@ -1,20 +1,22 @@
 import { CONSTANTS } from "../actions";
-import 'whatwg-fetch';
 
-let listID = 2;
-let cardID = 2;
+let listID = 1;
+let cardID = 1;
 
-const initialState = {
-    lists: [],
-};
+let initialState = {
+  lists: []
+}
 
 const listsReducer = (state = initialState, action) => {
   switch (action.type) {
+    case CONSTANTS.LOAD_LISTS:
+      return {...state, lists: action.payload.lists}
+
     case CONSTANTS.ADD_LIST:
       const newList = {
         title: action.payload,
         cards: [],
-        id: `list-${listID}`,
+        id: `l${listID}`,
       };
       listID += 1;
       return {...state, lists: [...state.lists, newList]};
@@ -22,7 +24,8 @@ const listsReducer = (state = initialState, action) => {
     case CONSTANTS.ADD_CARD: {
       const newCard = {
         text: action.payload.text,
-        id: `card-${cardID}`,
+        id: `c${cardID}`,
+        index: 0
       };
       cardID += 1;
 
@@ -69,7 +72,7 @@ const listsReducer = (state = initialState, action) => {
         const listEnd = state.lists.find((list) => droppableIdEnd === list.id);
         listEnd.cards.splice(droppableIndexEnd, 0, ...card);
       }
-      return {...state, lists: newState};
+      return {...state, lists: [...state.lists]};
 
     case CONSTANTS.EDIT_LIST_TITLE: {
       const { listID, newTitle } = action.payload;
