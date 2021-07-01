@@ -13,20 +13,21 @@ class App extends Component {
     super();
 
     this.state = {
-      lists: []
+        lists: [],
     }
-  }
+  };
 
-  componentDidUpdate(prevProps, prevState){
-    if(prevState.lists !== this.state.lists){
-      this.setState({lists: this.state.lists})
+
+  componentDidUpdate(prevProps){
+    if(this.props.lists.lists !== prevProps.lists.lists){
+      this.setState({lists: this.props.lists.lists});
+      console.log(this.props)
     }
-  }
+  };
 
   componentDidMount() {
     fetch('http://localhost:8080/trellolist')
         .then(r => r.json())
-        .then(json => this.setState({lists: json}))
         .then(json => this.props.loadLists({lists: json}))
         .catch(error => console.error('Error retrieving lists: ' + error));
   }
@@ -56,8 +57,6 @@ class App extends Component {
 
     if(source.droppableId !== destination.droppableId){
       let final = destination.droppableId;
-      console.log(final)
-      console.log(draggableId)
       submitEditCardList({draggableId, final});
     }
 

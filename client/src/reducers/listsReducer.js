@@ -3,11 +3,7 @@ import { CONSTANTS } from "../actions";
 let listID = 1;
 let cardID = 1;
 
-let initialState = {
-  lists: []
-}
-
-const listsReducer = (state = initialState, action) => {
+const listsReducer = (state = {lists:[]}, action) => {
   switch (action.type) {
     case CONSTANTS.LOAD_LISTS:
       return {...state, lists: action.payload.lists}
@@ -19,7 +15,7 @@ const listsReducer = (state = initialState, action) => {
         id: `l${listID}`,
       };
       listID += 1;
-      return {...state, lists: [...state.lists, newList]};
+      return {...state, lists: newList};
 
     case CONSTANTS.ADD_CARD: {
       const newCard = {
@@ -29,7 +25,7 @@ const listsReducer = (state = initialState, action) => {
       };
       cardID += 1;
 
-      const newState = state.lists.map((list) => {
+      const newState = state.lists.lists.map((list) => {
         if (list.id === action.payload.listID) {
           return {
             ...list,
@@ -52,7 +48,7 @@ const listsReducer = (state = initialState, action) => {
         type,
       } = action.payload;
       
-      const newState = [...state.lists];
+      const newState = [...state.lists.lists];
 
       if (type === "list") {
         const list = newState.splice(droppableIndexStart, 1);
@@ -61,23 +57,23 @@ const listsReducer = (state = initialState, action) => {
       }
 
       if (droppableIdStart === droppableIdEnd) {
-        const list = state.lists.find((list) => droppableIdStart === list.id);
+        const list = state.lists.lists.find((list) => droppableIdStart === list.id);
         const card = list.cards.splice(droppableIndexStart, 1);
         list.cards.splice(droppableIndexEnd, 0, ...card);
       }
 
       if (droppableIdStart !== droppableIdEnd) {
-        const listStart = state.lists.find((list) => droppableIdStart === list.id);
+        const listStart = state.lists.lists.find((list) => droppableIdStart === list.id);
         const card = listStart.cards.splice(droppableIndexStart, 1);
-        const listEnd = state.lists.find((list) => droppableIdEnd === list.id);
+        const listEnd = state.lists.lists.find((list) => droppableIdEnd === list.id);
         listEnd.cards.splice(droppableIndexEnd, 0, ...card);
       }
-      return {...state, lists: [...state.lists]};
+      return {...state, lists: [...state.lists.lists]};
 
     case CONSTANTS.EDIT_LIST_TITLE: {
       const { listID, newTitle } = action.payload;
 
-      const newState = state.lists.map((list) => {
+      const newState = state.lists.lists.map((list) => {
         if (list.id === listID) {
           return {
             ...list,
@@ -93,7 +89,7 @@ const listsReducer = (state = initialState, action) => {
     case CONSTANTS.EDIT_CARD: {
       const { id, listID, newText } = action.payload;
 
-      return {...state, lists: state.lists.map(list => {
+      return {...state, lists: state.lists.lists.map(list => {
         if (list.id === listID) {
           const cardEdited = list.cards.map(card => {
             if (card.id === id) {
