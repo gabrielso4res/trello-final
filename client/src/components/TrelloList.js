@@ -28,6 +28,7 @@ function TrelloList({ title, cards, listID, index, dispatch }) {
   const [listTitle, setListTitle] = useState(title);
 
   const submitNewCard = (card) => {
+    console.log(card.index)
     fetch('http://localhost:8080/trellocard/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

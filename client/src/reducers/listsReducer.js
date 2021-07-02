@@ -15,7 +15,7 @@ const listsReducer = (state = {lists:[]}, action) => {
         id: `l${listID}`,
       };
       listID += 1;
-      return {...state, lists: newList};
+      return {...state, lists: [...state.lists, newList]};
 
     case CONSTANTS.ADD_CARD: {
       const newCard = {
@@ -25,7 +25,7 @@ const listsReducer = (state = {lists:[]}, action) => {
       };
       cardID += 1;
 
-      const newState = state.lists.lists.map((list) => {
+      const newState = state.lists.map((list) => {
         if (list.id === action.payload.listID) {
           return {
             ...list,
@@ -48,7 +48,7 @@ const listsReducer = (state = {lists:[]}, action) => {
         type,
       } = action.payload;
       
-      const newState = [...state.lists.lists];
+      const newState = [...state.lists];
 
       if (type === "list") {
         const list = newState.splice(droppableIndexStart, 1);
@@ -57,23 +57,23 @@ const listsReducer = (state = {lists:[]}, action) => {
       }
 
       if (droppableIdStart === droppableIdEnd) {
-        const list = state.lists.lists.find((list) => droppableIdStart === list.id);
+        const list = state.lists.find((list) => droppableIdStart === list.id);
         const card = list.cards.splice(droppableIndexStart, 1);
         list.cards.splice(droppableIndexEnd, 0, ...card);
       }
 
       if (droppableIdStart !== droppableIdEnd) {
-        const listStart = state.lists.lists.find((list) => droppableIdStart === list.id);
+        const listStart = state.lists.find((list) => droppableIdStart === list.id);
         const card = listStart.cards.splice(droppableIndexStart, 1);
-        const listEnd = state.lists.lists.find((list) => droppableIdEnd === list.id);
+        const listEnd = state.lists.find((list) => droppableIdEnd === list.id);
         listEnd.cards.splice(droppableIndexEnd, 0, ...card);
       }
-      return {...state, lists: [...state.lists.lists]};
+      return {...state, lists: [...state.lists]};
 
     case CONSTANTS.EDIT_LIST_TITLE: {
       const { listID, newTitle } = action.payload;
 
-      const newState = state.lists.lists.map((list) => {
+      const newState = state.lists.map((list) => {
         if (list.id === listID) {
           return {
             ...list,
@@ -89,7 +89,7 @@ const listsReducer = (state = {lists:[]}, action) => {
     case CONSTANTS.EDIT_CARD: {
       const { id, listID, newText } = action.payload;
 
-      return {...state, lists: state.lists.lists.map(list => {
+      return {...state, lists: state.lists.map(list => {
         if (list.id === listID) {
           const cardEdited = list.cards.map(card => {
             if (card.id === id) {

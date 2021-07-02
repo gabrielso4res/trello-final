@@ -19,20 +19,20 @@ class App extends Component {
 
 
   componentDidUpdate(prevProps){
-    if(this.props.lists.lists !== prevProps.lists.lists){
-      this.setState({lists: this.props.lists.lists});
-      console.log(this.props)
+    if(this.props.lists !== prevProps.lists){
+      this.setState({lists: this.props.lists});
     }
   };
 
   componentDidMount() {
     fetch('http://localhost:8080/trellolist')
         .then(r => r.json())
-        .then(json => this.props.loadLists({lists: json}))
+        .then(json => this.props.loadLists(json))
         .catch(error => console.error('Error retrieving lists: ' + error));
   }
 
   submitNewList = (list) => {
+    console.log(list.position)
     fetch('http://localhost:8080/trellolist', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
