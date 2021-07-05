@@ -32,7 +32,6 @@ class App extends Component {
   }
 
   submitNewList = (list) => {
-    console.log(list.position)
     fetch('http://localhost:8080/trellolist', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -88,7 +87,7 @@ class App extends Component {
                 {lists.map((list, index) => (
                   <TrelloList
                     listID={list.id}
-                    key={list.id}
+                    key={list.lIdFront}
                     title={list.title}
                     cards={list.cards}
                     index={index}

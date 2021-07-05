@@ -23,12 +23,11 @@ const ListTitle = styled.h4`
   }
 `;
 
-function TrelloList({ title, cards, listID, index, dispatch }) {
+function TrelloList({ title, cards, listID, index, dispatch, lIdFront }) {
   const [isEditing, setIsEditing] = useState(false);
   const [listTitle, setListTitle] = useState(title);
 
   const submitNewCard = (card) => {
-    console.log(card.index)
     fetch('http://localhost:8080/trellocard/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -76,7 +75,7 @@ function TrelloList({ title, cards, listID, index, dispatch }) {
     setIsEditing(false);
 
     submitEditList({id: listID, title: listTitle});
-    dispatch(editTitle(listID, listTitle));
+    dispatch(editTitle(lIdFront, listTitle));
   };
 
   return (
@@ -104,12 +103,13 @@ function TrelloList({ title, cards, listID, index, dispatch }) {
                   <TrelloCard
                     index={index}
                     id={card.id}
-                    key={card.id}
+                    key={card.cIdFront}
                     text={card.text}
                     listID={listID}
+                    lIdFront={lIdFront}
                   />
                 ))}
-                <TrelloActionButton listID={listID} addCardToApi={submitNewCard} />
+                <TrelloActionButton listID={listID} lIdFront={lIdFront} addCardToApi={submitNewCard} />
                 {provider.placeholder}
               </div>
             )}

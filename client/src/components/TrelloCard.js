@@ -15,7 +15,7 @@ const CardContainer = styled.div`
   word-wrap: break-word;
 `;
 
-const TrelloCard = React.memo(({ text, id, listID, index, dispatch }) => {
+const TrelloCard = React.memo(({ text, id, listID, index, dispatch, cIdFront, lIdFront }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [cardText, setText] = useState(text);
 
@@ -39,7 +39,7 @@ const TrelloCard = React.memo(({ text, id, listID, index, dispatch }) => {
     e.preventDefault();
 
     submitEditCard({id: id, text: cardText, lista: listID});
-    dispatch(editCard(id, listID, cardText));
+    dispatch(editCard(cIdFront, lIdFront, cardText));
     setIsEditing(false);
   };
 
