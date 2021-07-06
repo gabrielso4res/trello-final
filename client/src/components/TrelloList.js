@@ -74,12 +74,12 @@ function TrelloList({ title, cards, listID, index, dispatch, lIdFront }) {
   const handleFinishEditing = (e) => {
     setIsEditing(false);
 
-    submitEditList({id: listID, title: listTitle});
+    submitEditList({id: listID, title: listTitle, idfront : lIdFront});
     dispatch(editTitle(lIdFront, listTitle));
   };
 
   return (
-    <Draggable draggableId={String(listID)} index={index}>
+    <Draggable draggableId={String(("l"+listID))} index={index}>
       {(provider) => (
         <div
           {...provider.draggableProps}
@@ -87,7 +87,7 @@ function TrelloList({ title, cards, listID, index, dispatch, lIdFront }) {
           ref={provider.innerRef}
           className="ListContainer"
         >
-          <Droppable droppableId={String(listID)} type="card">
+          <Droppable droppableId={String(("l"+listID))} type="card">
             {(provider) => (
               <div
               {...provider.droppableProps}
@@ -103,7 +103,7 @@ function TrelloList({ title, cards, listID, index, dispatch, lIdFront }) {
                   <TrelloCard
                     index={index}
                     id={card.id}
-                    key={card.cIdFront}
+                    key={card.id}
                     text={card.text}
                     listID={listID}
                     lIdFront={lIdFront}

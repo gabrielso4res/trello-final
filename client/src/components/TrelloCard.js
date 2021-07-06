@@ -57,7 +57,7 @@ const TrelloCard = React.memo(({ text, id, listID, index, dispatch, cIdFront, lI
 
   const renderCard = () => {
     return (
-      <Draggable draggableId={String(id)} index={index}>
+      <Draggable draggableId={String(("c"+id))} index={index}>
         {provided => (
           <CardContainer
             {...provided.draggableProps}

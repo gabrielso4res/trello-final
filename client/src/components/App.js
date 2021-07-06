@@ -43,21 +43,30 @@ class App extends Component {
     const { destination, source, draggableId, type } = result;
 
     const submitEditCardList = (editedcard) => {
-      fetch('http://localhost:8080/trellocard/'+editedcard.draggableId, {
+      fetch('http://localhost:8080/trellocard/'+editedcard.cFinal, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({id: editedcard.draggableId,lista: editedcard.final})})
+        body: JSON.stringify({id: editedcard.cFinal,lista: editedcard.lFinal})})
           .catch(ex => console.error('Unable to save card', ex));
     }
 
     if (!destination) {
       return;
     }
+    let lFinal = 0;
+    let cFinal = 0;
 
     if(source.droppableId !== destination.droppableId){
-      let final = destination.droppableId;
-      submitEditCardList({draggableId, final});
+      function justNumber(string){
+        var numsStr = string.replace(/\D/gim, '');
+        return parseInt(numsStr);
+      }
+      lFinal = justNumber(destination.droppableId);
+      cFinal = justNumber(draggableId);
+      submitEditCardList({cFinal, lFinal});
     }
+    console.log(source.index)
+    console.log(destination.index)
 
     this.props.dispatch(
       sort(
@@ -87,7 +96,7 @@ class App extends Component {
                 {lists.map((list, index) => (
                   <TrelloList
                     listID={list.id}
-                    key={list.lIdFront}
+                    key={list.id}
                     title={list.title}
                     cards={list.cards}
                     index={index}

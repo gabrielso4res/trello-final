@@ -44,25 +44,25 @@ const listsReducer = (state = {lists:[]}, action) => {
         droppableIndexEnd,
         type,
       } = action.payload;
-      
+
       const newState = [...state.lists];
 
       if (type === "list") {
         const list = newState.splice(droppableIndexStart, 1);
-        newState.splice((droppableIndexEnd), 0, ...list);
+        newState.splice(droppableIndexEnd, 0, ...list);
         return {...state, lists: newState};
       }
 
       if (droppableIdStart === droppableIdEnd) {
-        const list = state.lists.find((list) => ("l"+droppableIdStart) === list.lIdFront);
+        const list = state.lists.find((list) => droppableIdStart === list.lIdFront);
         const card = list.cards.splice(droppableIndexStart, 1);
         list.cards.splice(droppableIndexEnd, 0, ...card);
       }
 
       if (droppableIdStart !== droppableIdEnd) {
-        const listStart = state.lists.find((list) => ("l"+droppableIdStart) === list.lIdFront);
+        const listStart = state.lists.find((list) => droppableIdStart === list.lIdFront);
         const card = listStart.cards.splice(droppableIndexStart, 1);
-        const listEnd = state.lists.find((list) => ("l"+droppableIdEnd) === list.lIdFront);
+        const listEnd = state.lists.find((list) => droppableIdEnd === list.lIdFront);
         listEnd.cards.splice(droppableIndexEnd, 0, ...card);
       }
       return {...state, lists: [...state.lists]};
