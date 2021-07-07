@@ -74,7 +74,7 @@ function TrelloList({ title, cards, listID, index, dispatch, lIdFront }) {
   const handleFinishEditing = (e) => {
     setIsEditing(false);
 
-    submitEditList({id: listID, title: listTitle, idfront : lIdFront});
+    submitEditList({id: listID, title: listTitle, idFront : lIdFront});
     dispatch(editTitle(lIdFront, listTitle));
   };
 
@@ -106,7 +106,7 @@ function TrelloList({ title, cards, listID, index, dispatch, lIdFront }) {
                     key={card.id}
                     text={card.text}
                     listID={listID}
-                    lIdFront={lIdFront}
+                    lIdFront={card.lIdFront}
                   />
                 ))}
                 <TrelloActionButton listID={listID} lIdFront={lIdFront} addCardToApi={submitNewCard} />

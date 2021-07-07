@@ -6,7 +6,7 @@ model {
 
 json {
 	title trelloList.title
-
+	lIdFront ("l"+trelloList.id)
 	id trelloList.id
 
 	/*def a = trelloList.get(1);

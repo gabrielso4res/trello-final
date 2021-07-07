@@ -1,7 +1,5 @@
 import { CONSTANTS } from "../actions";
 
-let cardID = 1;
-
 const listsReducer = (state = {lists:[]}, action) => {
   switch (action.type) {
     case CONSTANTS.LOAD_LISTS:
@@ -18,13 +16,15 @@ const listsReducer = (state = {lists:[]}, action) => {
       return {...state, lists: [...state.lists, newList]};
 
     case CONSTANTS.ADD_CARD: {
+      let qtdCards = 0;
+      state.lists.map((list) => {qtdCards += list.cards.length});
       const newCard = {
         text: action.payload.text,
-        cIdFront: "c"  + cardID /*(state.lists.find((list) => action.payload.listID === list.id).cards.length + 1)*/,
-        id: cardID,
+        cIdFront: "c"  + (qtdCards + 1)/*(state.lists.find((list) => action.payload.listID === list.id).cards.length + 1) + "l" + action.payload.listID*/,
+        id: qtdCards + 1 /*(state.lists.find((list) => action.payload.listID === list.id).cards.length + 1)*/,
       };
 
-      cardID +=1;
+
 
       const newState = state.lists.map((list) => {
         if (list.id === action.payload.listID) {
