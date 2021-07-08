@@ -14,6 +14,15 @@ export const addList = (title) => {
   };
 };
 
+export const deleteList = listID => {
+  return {
+    type: CONSTANTS.DELETE_LIST,
+    payload: {
+      listID
+    }
+  };
+};
+
 export const editTitle = (listID, newTitle) => {
   return {
     type: CONSTANTS.EDIT_LIST_TITLE,

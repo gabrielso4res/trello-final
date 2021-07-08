@@ -6,11 +6,12 @@ const listsReducer = (state = {lists:[]}, action) => {
       return {...state, lists: action.payload.lists}
 
     case CONSTANTS.ADD_LIST:
+      let maxId = Math.max((state.lists.map((list) => {return list.id})));
       const newList = {
         title: action.payload,
         cards: [],
         lIdFront: "l" + (state.lists.length + 1),
-        id: (state.lists.length + 1),
+        id: maxId += 1,
       };
 
       return {...state, lists: [...state.lists, newList]};
@@ -23,8 +24,6 @@ const listsReducer = (state = {lists:[]}, action) => {
         cIdFront: "c"  + (qtdCards + 1)/*(state.lists.find((list) => action.payload.listID === list.id).cards.length + 1) + "l" + action.payload.listID*/,
         id: qtdCards + 1 /*(state.lists.find((list) => action.payload.listID === list.id).cards.length + 1)*/,
       };
-
-
 
       const newState = state.lists.map((list) => {
         if (list.id === action.payload.listID) {
@@ -103,7 +102,27 @@ const listsReducer = (state = {lists:[]}, action) => {
         }
         return list;
       })
-    };}
+      };
+    }
+
+    case CONSTANTS.DELETE_CARD: {
+      const { id, listID } = action.payload;
+      return {
+        ...state, lists: state.lists.map(list => {
+          if (list.id === listID) {
+            const newCards = list.cards.filter(card => card.id !== id);
+            return {...list, cards: newCards};
+          } else {
+            return list;
+          }
+        })
+      };
+    }
+
+    case CONSTANTS.DELETE_LIST: {
+      const { listID } = action.payload;
+      return {...state, lists: state.lists.filter(list => list.id !== listID)};
+    }
 
     default:
       return state;

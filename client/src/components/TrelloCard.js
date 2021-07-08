@@ -5,8 +5,9 @@ import Typography from "@material-ui/core/Typography";
 import { Draggable } from "react-beautiful-dnd";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { editCard } from "../actions";
+import { editCard, deleteCard } from "../actions";
 import TrelloForm from "./TrelloForm";
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const CardContainer = styled.div`
   margin: 0 0 8px 0;
@@ -27,6 +28,12 @@ const TrelloCard = React.memo(({ text, id, listID, index, dispatch, cIdFront, lI
         .catch(ex => console.error('Unable to save card', ex));
   };
 
+  const submitDeleteCard = (card) => {
+    fetch('http://localhost:8080/trellolist/'+card.lista, {
+      method: 'DELETE'})
+        .catch(ex => console.error('Unable to save card', ex));
+  };
+
   const closeForm = e => {
     setIsEditing(false);
   };
@@ -42,6 +49,11 @@ const TrelloCard = React.memo(({ text, id, listID, index, dispatch, cIdFront, lI
     dispatch(editCard(cIdFront, lIdFront, cardText));
     setIsEditing(false);
   };
+
+  const handleDeleteCard = e => {
+    submitDeleteCard({id: id, lista: listID})
+    dispatch(deleteCard(id, listID));
+  }
 
   const renderEditForm = () => {
     return (
@@ -66,6 +78,13 @@ const TrelloCard = React.memo(({ text, id, listID, index, dispatch, cIdFront, lI
             onDoubleClick={() => setIsEditing(true)}
           >
             <Card>
+              <DeleteIcon
+                  style={{cursor: "pointer"}}
+                  fontSize="small"
+                  onClick={handleDeleteCard}
+              >
+                Delete
+              </DeleteIcon>
             <CardContent>
               <Typography gutterBottom>{cardText}</Typography>
             </CardContent>

@@ -3,8 +3,9 @@ import TrelloCard from "./TrelloCard";
 import TrelloActionButton from "./TrelloActionButton";
 import styled from "styled-components";
 import { Droppable, Draggable } from "react-beautiful-dnd";
-import { editTitle } from "../actions";
+import { editTitle, deleteList } from "../actions";
 import { connect } from "react-redux";
+import DeleteIcon from '@material-ui/icons/Delete';
 import 'whatwg-fetch';
 
 const TitleContainer = styled.div`
@@ -43,6 +44,12 @@ function TrelloList({ title, cards, listID, index, dispatch, lIdFront }) {
         .catch(ex => console.error('Unable to save list', ex));
   };
 
+  const submitDeleteList = (list) => {
+    fetch('http://localhost:8080/trellolist/' + list.id, {
+      method: 'DELETE'})
+        .catch(ex => console.error('Unable to delete list', ex));
+  };
+
   const StyledInput = styled.input`
     width: 100%;
     border: none;
@@ -78,6 +85,11 @@ function TrelloList({ title, cards, listID, index, dispatch, lIdFront }) {
     dispatch(editTitle(lIdFront, listTitle));
   };
 
+  const handleDeleteList = (e) => {
+    dispatch(deleteList(listID));
+    submitDeleteList({id: listID})
+  }
+
   return (
     <Draggable draggableId={String(("l"+listID))} index={index}>
       {(provider) => (
@@ -97,6 +109,13 @@ function TrelloList({ title, cards, listID, index, dispatch, lIdFront }) {
                 ) : (
                   <TitleContainer onClick={() => setIsEditing(true)}>
                     <ListTitle>{listTitle}</ListTitle>
+                    <DeleteIcon
+                        style={{cursor: "pointer"}}
+                        fontSize="small"
+                        onClick={handleDeleteList}
+                    >
+                      Delete
+                    </DeleteIcon>
                   </TitleContainer>
                 )}
                 {cards.map((card, index) => (
