@@ -5,7 +5,8 @@ import grails.rest.Resource
 @Resource(uri = '/trellocard')
 
 class TrelloCard {
-    String id, text;
+    int id;
+    String text;
 
     static belongsTo = [lista: TrelloList];
 

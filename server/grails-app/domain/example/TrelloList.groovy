@@ -5,7 +5,8 @@ import grails.rest.Resource
 @Resource(uri = '/trellolist')
 
 class TrelloList {
-    String id, title;
+    String title;
+    int id;
 
     static hasMany = [card: TrelloCard];
 

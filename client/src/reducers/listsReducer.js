@@ -17,7 +17,7 @@ const listsReducer = (state = {lists:[]}, action) => {
 
     case CONSTANTS.ADD_CARD: {
       let qtdCards = 0;
-      state.lists.map((list) => {qtdCards += list.cards.length});
+      state.lists.map((list) => {return qtdCards += list.cards.length});
       const newCard = {
         text: action.payload.text,
         cIdFront: "c"  + (qtdCards + 1)/*(state.lists.find((list) => action.payload.listID === list.id).cards.length + 1) + "l" + action.payload.listID*/,

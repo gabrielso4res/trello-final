@@ -83,7 +83,7 @@ hibernate:
 dataSource:
     pooled: true
     jmxExport: true
-    driverClassName: com.mysql.jdbc.Driver
+    driverClassName: com.mysql.cj.jdbc.Driver
     dialect: org.hibernate.dialect.MySQL5InnoDBDialect
     username: root
     password: 1234
@@ -92,7 +92,7 @@ environments:
     development:
         dataSource:
             dbCreate: update
-            url: jdbc:mysql://127.0.0.1:3306/trello
+            url: jdbc:mysql://127.0.0.1:3306/trello?useTimezone=true&serverTimezone=UTC
     test:
         dataSource:
             dbCreate: update
